@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
+import { userContext } from '../context/userContext';
 
 import { getCompletedTasks } from '../services/tasks/taskRequests';
 
@@ -9,12 +11,14 @@ import DetailTaskModal from '../Components/DetailTaskModal';
 
 function CompletedTasks() {
 
+  const {loggedUser} = useContext(userContext);
+
   const [completedTasks, setCompletedTasks] = useState([]);
   const [openDetailModal, setOpenDetailModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
-    getCompletedTasks()
+    getCompletedTasks(loggedUser.uid)
     .then(data => {
 
       if (data.length != 0) {

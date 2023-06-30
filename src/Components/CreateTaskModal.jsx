@@ -1,9 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { createTask } from '../services/tasks/taskRequests';
+
+import { userContext } from '../context/userContext';
 
 
 
 export default function CreateTaskModal({updateTasks, handleclose}) {
+
+    const {loggedUser} = useContext(userContext);
+  
+
 
     const [formData, setFormData] = useState({
         title: '',
@@ -23,7 +29,7 @@ export default function CreateTaskModal({updateTasks, handleclose}) {
 
         }
 
-        createTask(taskData)
+        createTask(taskData,loggedUser.uid)
         .then(data => {
             if( Object.keys(data).length === 0){
                 console.log('la tarea No fue creada');
@@ -180,7 +186,7 @@ export default function CreateTaskModal({updateTasks, handleclose}) {
                       onClick={registerTask}
 
                     >
-                      Save Changes
+                      Save Task
                     </button>
                   </div>
                 </div>

@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { createCompletedTask,deletePendingTask } from '../services/tasks/taskRequests';
+
+import { userContext } from '../context/userContext';
 
 
 
 export default function CompleteConfirmationModal({updateTasks,task, handleclose}) {
+
+    const {loggedUser} = useContext(userContext);
 
     const [timeForm, setTimeForm] = useState(0);
 
@@ -24,7 +28,7 @@ export default function CompleteConfirmationModal({updateTasks,task, handleclose
             realTime: timeForm
         };
 
-        deletePendingTask(pendingId)
+        deletePendingTask(pendingId,loggedUser.uid)
         .then(() => {
             updateTasks();
             console.log('la tarea fue eliminada de pendientes');
@@ -33,7 +37,7 @@ export default function CompleteConfirmationModal({updateTasks,task, handleclose
 
         
 
-        createCompletedTask(dataTask)
+        createCompletedTask(dataTask,loggedUser.uid)
         .then(data => {
             if( Object.keys(data).length === 0){
                 console.log('la tarea No fue asignada como completa');
