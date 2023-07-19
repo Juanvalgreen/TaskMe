@@ -59,7 +59,7 @@ function PendingTask() {
     setOpenDeleteModal(!openDeleteModal);
   };
 
-  console.log(localStorage.getItem('user'));
+  console.log(loggedUser);
   
   return (
     <div className='bg-slate-600 w-hv h-full pt-6'>
